@@ -1,0 +1,5 @@
+query AuthenticationCode($address: ID!) {
+  authenticationCode(address: $address) {
+    code
+  }
+}
