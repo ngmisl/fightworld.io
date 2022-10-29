@@ -1,5 +1,4 @@
 import { AuthContext, AuthData } from "~/context/AuthContext";
-import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
 import { useMemo, useState } from "react";
 import Login from "../login/Login";

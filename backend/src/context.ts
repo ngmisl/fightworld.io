@@ -10,7 +10,6 @@ export async function createContext(
   request: ExpressContext
 ): Promise<Partial<Context>> {
   return {
-    ...request,
     response: request.res,
     request: request.req,
   };

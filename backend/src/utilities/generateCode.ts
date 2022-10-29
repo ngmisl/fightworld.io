@@ -1,0 +1,1 @@
+export const generateCode = () => Math.floor(Math.random() * 100000);

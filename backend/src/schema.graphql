@@ -8,7 +8,13 @@ type AuthenticationCode {
 
 type Query {
   authenticationCode(address: ID!): AuthenticationCode!
+  login(address: ID!, signature: String!): Tokens
   user(address: ID!): User
+}
+
+type Tokens {
+  access_token: String!
+  refresh_token: String!
 }
 
 type User {

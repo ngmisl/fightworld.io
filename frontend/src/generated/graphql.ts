@@ -35,6 +35,7 @@ export type AuthenticationCode = {
 export type Query = {
   __typename?: 'Query';
   authenticationCode: AuthenticationCode;
+  login?: Maybe<Tokens>;
   user?: Maybe<User>;
 };
 
@@ -44,8 +45,20 @@ export type QueryAuthenticationCodeArgs = {
 };
 
 
+export type QueryLoginArgs = {
+  address: Scalars['ID'];
+  signature: Scalars['String'];
+};
+
+
 export type QueryUserArgs = {
   address: Scalars['ID'];
+};
+
+export type Tokens = {
+  __typename?: 'Tokens';
+  access_token: Scalars['String'];
+  refresh_token: Scalars['String'];
 };
 
 export type User = {
@@ -115,6 +128,36 @@ export default {
             ]
           },
           {
+            "name": "login",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "signature",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "user",
             "type": {
               "kind": "OBJECT",
@@ -133,6 +176,35 @@ export default {
                 }
               }
             ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Tokens",
+        "fields": [
+          {
+            "name": "access_token",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []

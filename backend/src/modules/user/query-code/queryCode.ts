@@ -1,16 +1,17 @@
 import { db } from "~/db";
+import { generateCode } from "~/utilities/generateCode";
 import { getUser } from "../query-user/queryUser";
 
 export const getCode = async (address: string) => {
-  const randomInteger = Math.floor(Math.random() * 100000);
+  const randomInteger = generateCode()
   const user = await getUser(address);
   if (user) {
-    db.updateTable("user")
+    await db.updateTable("auth")
       .set({ code: randomInteger })
       .where("address", "=", address)
       .executeTakeFirstOrThrow();
   } else {
-    db.insertInto("user")
+    await db.insertInto("auth")
       .values({ code: randomInteger, address })
       .executeTakeFirstOrThrow();
   }

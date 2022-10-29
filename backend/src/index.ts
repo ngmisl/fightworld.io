@@ -8,10 +8,14 @@ import http from "http";
 import { createContext } from "./context";
 import { createSchema, createTypegenSchema } from "./schema";
 import { types } from "./modules";
+import { applyMiddleware } from "graphql-middleware";
+import { permissions } from "./modules/permissions";
 
 export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
   const app = express();
   const httpServer = http.createServer(app);
+
+  const schemaWithPermissions = applyMiddleware(schema, permissions)
 
   const server = new ApolloServer({
     cache: "bounded",
@@ -19,7 +23,7 @@ export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
     csrfPrevention: true,
     introspection: true,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    schema,
+    schema: schemaWithPermissions,
   });
   await server.start();
 
