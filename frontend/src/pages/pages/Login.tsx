@@ -1,8 +1,7 @@
-import { useAuthenticationCodeQuery } from "~/generated/graphql";
+import { useAuthenticationCodeQuery, useLoginQuery } from "~/generated/graphql";
 import { Auth, AuthContext } from "~/context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
-import { Navigate } from "react-router-dom";
 
 export function Login() {
   const { auth, setAuth } = useContext(AuthContext) as Auth;
@@ -22,20 +21,37 @@ export function Login() {
     }
   );
 
-  const [result] = useAuthenticationCodeQuery({
+  const [codeResult] = useAuthenticationCodeQuery({
     variables: { address: auth.address! },
     pause: auth.address === undefined,
   });
+
+  const code = codeResult.data?.authenticationCode.code;
+  useEffect(() => {
+    setAuth({ ...auth, code });
+  }, [code]);
+
+  
+  const [loginResult] = useLoginQuery({
+    variables: {
+      address: auth.address!,
+      signature: auth.signature!,
+    },
+    pause: auth.signature === undefined
+  })
+
+  console.log(loginResult)
+  const access_token = loginResult.data?.login?.access_token;
+  useEffect(() => {
+    console.log(access_token)
+    setAuth({ ...auth, access_token });
+  }, [access_token]);
 
   const signMessageResult = useQuery(
     ["signMessage", auth.code],
     async () => {
       const signature = await signer.signMessage(auth.code!.toString());
-      //Get the access_token and refresh_token
-      setAuth({
-        ...auth,
-        access_token: "temporary",
-      });
+      setAuth({ ...auth, signature });
       return signature;
     },
     {
@@ -44,16 +60,9 @@ export function Login() {
     }
   );
 
-  const code = result.data?.authenticationCode.code;
-  useEffect(() => {
-    setAuth({ ...auth, code });
-  }, [code]);
-
   const handleConnect = async () => {
     await requestAccountsResult.refetch();
   };
-
-  if(auth.code) return <Navigate to="/" />
 
   if (requestAccountsResult.isLoading || requestAccountsResult.isFetching)
     return <div>Loading...</div>;

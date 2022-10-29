@@ -18,6 +18,18 @@ export const AuthenticationCodeDocument = gql`
 export function useAuthenticationCodeQuery(options: Omit<Urql.UseQueryArgs<AuthenticationCodeQueryVariables>, 'query'>) {
   return Urql.useQuery<AuthenticationCodeQuery, AuthenticationCodeQueryVariables>({ query: AuthenticationCodeDocument, ...options });
 };
+export const LoginDocument = gql`
+    query Login($address: ID!, $signature: String!) {
+  login(address: $address, signature: $signature) {
+    access_token
+    refresh_token
+  }
+}
+    `;
+
+export function useLoginQuery(options: Omit<Urql.UseQueryArgs<LoginQueryVariables>, 'query'>) {
+  return Urql.useQuery<LoginQuery, LoginQueryVariables>({ query: LoginDocument, ...options });
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -72,6 +84,14 @@ export type AuthenticationCodeQueryVariables = Exact<{
 
 
 export type AuthenticationCodeQuery = { __typename?: 'Query', authenticationCode: { __typename?: 'AuthenticationCode', code: number } };
+
+export type LoginQueryVariables = Exact<{
+  address: Scalars['ID'];
+  signature: Scalars['String'];
+}>;
+
+
+export type LoginQuery = { __typename?: 'Query', login?: { __typename?: 'Tokens', access_token: string, refresh_token: string } | null };
 
 import { IntrospectionQuery } from 'graphql';
 export default {

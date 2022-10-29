@@ -16,6 +16,8 @@ export const Tokens = objectType({
         address: nonNull(idArg()),
         signature: nonNull(stringArg())
       },
-      resolve: (_, { address, signature }) => authenticate(address, signature),
+      resolve: (_, { address, signature }) => {
+        return authenticate(address, signature)
+      },
     });
   });

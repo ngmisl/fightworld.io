@@ -6,6 +6,7 @@ export interface AuthData {
   address?: string;
   code?: number;
   access_token?: string;
+  signature?: string;
 }
 export interface Auth {
   auth: AuthData;
