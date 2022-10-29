@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createClient, Provider } from "urql";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import "./index.css";
@@ -17,8 +18,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider value={client}>
       <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools />
+        <BrowserRouter>
+          <App />
+          <ReactQueryDevtools />
+        </BrowserRouter>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>

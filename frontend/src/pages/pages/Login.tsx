@@ -2,12 +2,11 @@ import { useAuthenticationCodeQuery } from "~/generated/graphql";
 import { Auth, AuthContext } from "~/context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
+import { Navigate } from "react-router-dom";
 
-function Login() {
+export function Login() {
   const { auth, setAuth } = useContext(AuthContext) as Auth;
   const signer = auth.ethProvider.getSigner();
-
-  //Attempt to get refresh_token from local storage and fetch access_token
 
   const requestAccountsResult = useQuery(
     "requestAccounts",
@@ -54,6 +53,8 @@ function Login() {
     await requestAccountsResult.refetch();
   };
 
+  if(auth.code) return <Navigate to="/" />
+
   if (requestAccountsResult.isLoading || requestAccountsResult.isFetching)
     return <div>Loading...</div>;
   if (requestAccountsResult.isError)
@@ -65,5 +66,3 @@ function Login() {
     </>
   );
 }
-
-export default Login;

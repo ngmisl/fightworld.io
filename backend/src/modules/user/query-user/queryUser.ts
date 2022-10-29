@@ -2,7 +2,7 @@ import { db } from "~/db";
 
 export const getUser = async (address: string) => {
   const result = await db
-    .selectFrom("user")
+    .selectFrom("auth")
     .selectAll()
     .where("address", "=", address)
     .executeTakeFirst();
