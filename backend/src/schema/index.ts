@@ -14,6 +14,11 @@ export const createTypegenSchema = (outputFilePath: string, types: any) =>
     features: {
       abstractTypeStrategies: { isTypeOf: true },
     },
+    contextType: {
+			module: require.resolve("../context"),
+			alias: "Context",
+			export: "Context",
+		},
     types,
     outputs: {
       typegen: join(process.cwd(), outputFilePath),

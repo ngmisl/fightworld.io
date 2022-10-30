@@ -14,6 +14,6 @@ export const AuthenticationCodeQuery = queryField((t) => {
     args: {
       address: nonNull(idArg()),
     },
-    resolve: (_, { address }) => getCode(address),
+    resolve: (_, { address }) => getCode(address.toLowerCase()),
   });
 });

@@ -1,0 +1,5 @@
+query Login($address: ID!, $signature: String!) {
+  login(address: $address, signature: $signature) {
+    access_token
+  }
+}

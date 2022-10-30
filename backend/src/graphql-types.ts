@@ -4,7 +4,7 @@
  */
 
 import type * as db from "./db/database-schema"
-
+import type { Context as Context } from "./context"
 
 
 
@@ -34,7 +34,6 @@ export interface NexusGenObjects {
   Query: {};
   Tokens: { // root type
     access_token: string; // String!
-    refresh_token: string; // String!
   }
   User: db.User;
 }
@@ -60,7 +59,6 @@ export interface NexusGenFieldTypes {
   }
   Tokens: { // field return type
     access_token: string; // String!
-    refresh_token: string; // String!
   }
   User: { // field return type
     address: string; // String!
@@ -78,7 +76,6 @@ export interface NexusGenFieldTypeNames {
   }
   Tokens: { // field return type name
     access_token: 'String'
-    refresh_token: 'String'
   }
   User: { // field return type name
     address: 'String'
@@ -131,7 +128,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;

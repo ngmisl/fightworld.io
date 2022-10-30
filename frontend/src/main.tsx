@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createClient, Provider } from "urql";
+import { cacheExchange, createClient, dedupExchange, fetchExchange, Provider } from "urql";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter } from "react-router-dom";
@@ -10,6 +10,10 @@ import "./index.css";
 
 const client = createClient({
   url: "http://localhost:4000/graphql",
+  exchanges: [dedupExchange, cacheExchange, fetchExchange],
+  fetchOptions: () => ({
+    credentials: 'include',
+ })
 });
 
 const queryClient = new QueryClient();

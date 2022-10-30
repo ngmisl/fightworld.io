@@ -5,7 +5,6 @@ export const Tokens = objectType({
     name: "Tokens",
     definition(t) {
       t.nonNull.string("access_token");
-      t.nonNull.string("refresh_token");
     },
   });
   
@@ -16,8 +15,16 @@ export const Tokens = objectType({
         address: nonNull(idArg()),
         signature: nonNull(stringArg())
       },
-      resolve: (_, { address, signature }) => {
-        return authenticate(address, signature)
+      resolve: async (_, { address, signature }, ctx) => {
+        const {access_token, refresh_token} = await authenticate(address, signature)
+        ctx.response.cookie("refresh_token", refresh_token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: 1000 * 60 * 60 * 24 * 2, // 2 days
+        })
+        return {
+          access_token
+        }
       },
     });
   });

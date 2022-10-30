@@ -2,15 +2,15 @@ import { AuthContext, AuthData } from "~/context/AuthContext";
 import { providers } from "ethers";
 import { useMemo, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Login } from "~/pages/pages/Login";
+import { Login } from "~/pages/login/Login";
 import { PrivateRoutes } from "~/pages/PrivateRoutes";
 import { PublicRoutes } from "~/pages/PublicRoutes"
-import { Home } from "~/pages/pages/Home";
+import { Home } from "~/pages/home/Home";
 
-interface main {
+interface mainLayout {
   provider: providers.ExternalProvider;
 }
-function Main({ provider }: main) {
+export function MainLayout({ provider }: mainLayout) {
   const ethersProvider = new providers.Web3Provider(provider);
   const [auth, setAuth] = useState<AuthData>({
     ethProvider: ethersProvider,
@@ -19,17 +19,15 @@ function Main({ provider }: main) {
 
   return (
     <AuthContext.Provider value={authProvider}>
-      <Routes>
-        <Route element={<PrivateRoutes />}>
-          <Route path="*" element={<h1>Invalid path</h1>} />
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route element={<PublicRoutes />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
-      </Routes>
+    <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route path="*" element={<h1>Invalid path</h1>} />
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route element={<PublicRoutes />}>
+        <Route path="/login" element={<Login />} />
+      </Route>
+    </Routes>
     </AuthContext.Provider>
   );
 }
-
-export default Main;

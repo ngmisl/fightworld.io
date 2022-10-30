@@ -4,6 +4,7 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import http from "http";
+import cookieParser from "cookie-parser";
 
 import { createContext } from "./context";
 import { createSchema, createTypegenSchema } from "./schema";
@@ -15,19 +16,22 @@ export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
   const app = express();
   const httpServer = http.createServer(app);
 
-  const schemaWithPermissions = applyMiddleware(schema, permissions)
+  const schemaWithPermissions = applyMiddleware(schema, permissions);
+
+  app.use(cookieParser())
 
   const server = new ApolloServer({
-    cache: "bounded",
     context: createContext,
-    csrfPrevention: true,
     introspection: true,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     schema: schemaWithPermissions,
   });
   await server.start();
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: {
+    origin: 'http://localhost:5173',
+    credentials: true,
+  } });
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
   console.log(
     `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`

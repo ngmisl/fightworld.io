@@ -3,11 +3,3 @@ query AuthenticationCode($address: ID!) {
     code
   }
 }
-
-
-query Login($address: ID!, $signature: String!) {
-  login(address: $address, signature: $signature) {
-    access_token
-    refresh_token
-  }
-}

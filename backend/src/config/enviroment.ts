@@ -1,7 +1,8 @@
 //Create enviroment types here
 import * as dotenv from "dotenv-flow";
 import { throwError } from "~/utilities";
-dotenv.config({ node_env: "development"});
+if(!process.env.NODE_ENV) throwError("Enviroment not set");
+dotenv.config({ node_env: process.env.NODE_ENV});
 
 export const enviroment = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET ?? throwError("Token: ACCESS_TOKEN_SECRET not found"),

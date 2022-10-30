@@ -22,7 +22,6 @@ export const LoginDocument = gql`
     query Login($address: ID!, $signature: String!) {
   login(address: $address, signature: $signature) {
     access_token
-    refresh_token
   }
 }
     `;
@@ -70,7 +69,6 @@ export type QueryUserArgs = {
 export type Tokens = {
   __typename?: 'Tokens';
   access_token: Scalars['String'];
-  refresh_token: Scalars['String'];
 };
 
 export type User = {
@@ -91,7 +89,7 @@ export type LoginQueryVariables = Exact<{
 }>;
 
 
-export type LoginQuery = { __typename?: 'Query', login?: { __typename?: 'Tokens', access_token: string, refresh_token: string } | null };
+export type LoginQuery = { __typename?: 'Query', login?: { __typename?: 'Tokens', access_token: string } | null };
 
 import { IntrospectionQuery } from 'graphql';
 export default {
@@ -206,17 +204,6 @@ export default {
         "fields": [
           {
             "name": "access_token",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "refresh_token",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
