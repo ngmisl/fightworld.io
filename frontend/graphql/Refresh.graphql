@@ -1,0 +1,5 @@
+mutation Refresh($address: ID!) {
+  refresh(address: $address) {
+    access_token
+  }
+}

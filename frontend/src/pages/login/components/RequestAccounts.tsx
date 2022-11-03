@@ -1,15 +1,20 @@
+import { ethers, providers } from "ethers";
 import { useQuery } from "react-query";
-import { Auth } from "~/context/AuthContext";
+import { useSnapshot } from "valtio";
+import authStore from "~/authStore";
 
-export function RequestAccounts({auth, setAuth}: Auth) {
-      const signer = auth.ethProvider.getSigner();
+export function RequestAccounts() {
+      const auth = useSnapshot(authStore);
+
+      const ethersProvider = new providers.Web3Provider(window.ethereum);
+      const signer = ethersProvider.getSigner();
 
       const requestAccountsResult = useQuery(
             "requestAccounts",
             async (): Promise<string> => {
-              await auth.ethProvider.send("eth_requestAccounts", []);
+              await ethersProvider.send("eth_requestAccounts", []);
               const address = await signer.getAddress();
-              setAuth({ ...auth, address });
+              auth.setAddress(address)
               return address;
             },
             {
@@ -20,7 +25,7 @@ export function RequestAccounts({auth, setAuth}: Auth) {
 
       const handleConnect = async () => {
             await requestAccountsResult.refetch();
-          };
+      };
 
       if(requestAccountsResult.isFetching) return <button disabled={true}>Loading...</button>
 

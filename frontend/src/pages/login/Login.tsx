@@ -1,20 +1,16 @@
-import { Auth, AuthContext } from "~/context/AuthContext";
-import { useContext, useEffect } from "react";
 import { RequestAccounts } from "./components/RequestAccounts";
 import { RequestCode } from "./components/RequestCode";
 import { RequestSignature } from "./components/RequestSignature";
 import { RequestLogin } from "./components/RequestLogin";
+import { useSnapshot } from "valtio";
+import authStore from "~/authStore";
 
 export function Login() {
-  const { auth, setAuth } = useContext(AuthContext) as Auth;
+  const auth = useSnapshot(authStore);
 
-  useEffect(() => {
-    setAuth({ ...auth, address: window.ethereum.selectedAddress });
-  }, [window.ethereum.selectedAddress])
-
-  if(!auth.address) return <RequestAccounts auth={auth} setAuth={setAuth} />
-  if(!auth.code && !auth.access_token) return <RequestCode auth={auth} setAuth={setAuth} />
-  if(!auth.signature && !auth.access_token) return <RequestSignature auth={auth} setAuth={setAuth} />
-  if(!auth.access_token) return <RequestLogin auth={auth} setAuth={setAuth} />
+  if(!auth.address) return <RequestAccounts />
+  if(!auth.code && !auth.accessToken) return <RequestCode />
+  if(!auth.signature && !auth.accessToken) return <RequestSignature />
+  if(!auth.accessToken) return <RequestLogin />
   return <></>
 }

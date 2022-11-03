@@ -1,14 +1,19 @@
+import { providers } from "ethers";
 import { useQuery } from "react-query";
-import { Auth } from "~/context/AuthContext";
+import { useSnapshot } from "valtio";
+import authStore from "~/authStore";
 
-export function RequestSignature({auth, setAuth}: Auth) {
-      const signer = auth.ethProvider.getSigner();
+export function RequestSignature() {
+    const auth = useSnapshot(authStore);
+
+    const ethersProvider = new providers.Web3Provider(window.ethereum);
+      const signer = ethersProvider.getSigner();
 
       const signMessageResult = useQuery(
         ["signMessage", auth.code],
         async () => {
           const signature = await signer.signMessage(auth.code!.toString());
-          setAuth({ ...auth, signature });
+          auth.setSignature(signature)
           return signature;
         },
         {

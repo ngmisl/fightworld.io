@@ -6,14 +6,18 @@ type AuthenticationCode {
   code: Int!
 }
 
+type Mutation {
+  login(address: ID!, signature: String!): Tokens
+  refresh(address: ID!): Tokens
+}
+
 type Query {
   authenticationCode(address: ID!): AuthenticationCode!
-  login(address: ID!, signature: String!): Tokens
   user(address: ID!): User
 }
 
 type Tokens {
-  access_token: String!
+  access_token: String
 }
 
 type User {

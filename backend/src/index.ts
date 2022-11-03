@@ -29,7 +29,7 @@ export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
   await server.start();
 
   server.applyMiddleware({ app, cors: {
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://studio.apollographql.com'],
     credentials: true,
   } });
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));

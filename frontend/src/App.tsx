@@ -1,10 +1,12 @@
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
 import { MainLayout } from "./layouts/mainLayout/MainLayout";
 
-function App() {
-  if (window.ethereum)
-    return <MainLayout provider={window.ethereum} />
-  else return <>Make sure your browser has a wallet</>;
+function App() {  
+  return (
+    <BrowserRouter>
+      <MainLayout />
+    </BrowserRouter>
+    )
 }
 
 export default App;

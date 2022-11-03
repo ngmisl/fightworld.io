@@ -1,6 +1,2 @@
-createContext
-useContext
-useState
-useMemo
-
-https://www.youtube.com/watch?v=lhMKvyLRWo0
+- Finish up authExchange and test it in main.tsx
+- Make sure login flow still works after implimentation

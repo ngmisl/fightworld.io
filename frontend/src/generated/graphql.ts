@@ -19,15 +19,26 @@ export function useAuthenticationCodeQuery(options: Omit<Urql.UseQueryArgs<Authe
   return Urql.useQuery<AuthenticationCodeQuery, AuthenticationCodeQueryVariables>({ query: AuthenticationCodeDocument, ...options });
 };
 export const LoginDocument = gql`
-    query Login($address: ID!, $signature: String!) {
+    mutation Login($address: ID!, $signature: String!) {
   login(address: $address, signature: $signature) {
     access_token
   }
 }
     `;
 
-export function useLoginQuery(options: Omit<Urql.UseQueryArgs<LoginQueryVariables>, 'query'>) {
-  return Urql.useQuery<LoginQuery, LoginQueryVariables>({ query: LoginDocument, ...options });
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const RefreshDocument = gql`
+    mutation Refresh($address: ID!) {
+  refresh(address: $address) {
+    access_token
+  }
+}
+    `;
+
+export function useRefreshMutation() {
+  return Urql.useMutation<RefreshMutation, RefreshMutationVariables>(RefreshDocument);
 };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -43,10 +54,26 @@ export type AuthenticationCode = {
   code: Scalars['Int'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  login?: Maybe<Tokens>;
+  refresh?: Maybe<Tokens>;
+};
+
+
+export type MutationLoginArgs = {
+  address: Scalars['ID'];
+  signature: Scalars['String'];
+};
+
+
+export type MutationRefreshArgs = {
+  address: Scalars['ID'];
+};
+
 export type Query = {
   __typename?: 'Query';
   authenticationCode: AuthenticationCode;
-  login?: Maybe<Tokens>;
   user?: Maybe<User>;
 };
 
@@ -56,19 +83,13 @@ export type QueryAuthenticationCodeArgs = {
 };
 
 
-export type QueryLoginArgs = {
-  address: Scalars['ID'];
-  signature: Scalars['String'];
-};
-
-
 export type QueryUserArgs = {
   address: Scalars['ID'];
 };
 
 export type Tokens = {
   __typename?: 'Tokens';
-  access_token: Scalars['String'];
+  access_token?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -83,13 +104,20 @@ export type AuthenticationCodeQueryVariables = Exact<{
 
 export type AuthenticationCodeQuery = { __typename?: 'Query', authenticationCode: { __typename?: 'AuthenticationCode', code: number } };
 
-export type LoginQueryVariables = Exact<{
+export type LoginMutationVariables = Exact<{
   address: Scalars['ID'];
   signature: Scalars['String'];
 }>;
 
 
-export type LoginQuery = { __typename?: 'Query', login?: { __typename?: 'Tokens', access_token: string } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Tokens', access_token?: string | null } | null };
+
+export type RefreshMutationVariables = Exact<{
+  address: Scalars['ID'];
+}>;
+
+
+export type RefreshMutation = { __typename?: 'Mutation', refresh?: { __typename?: 'Tokens', access_token?: string | null } | null };
 
 import { IntrospectionQuery } from 'graphql';
 export default {
@@ -97,7 +125,9 @@ export default {
     "queryType": {
       "name": "Query"
     },
-    "mutationType": null,
+    "mutationType": {
+      "name": "Mutation"
+    },
     "subscriptionType": null,
     "types": [
       {
@@ -120,31 +150,8 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "Query",
+        "name": "Mutation",
         "fields": [
-          {
-            "name": "authenticationCode",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "AuthenticationCode",
-                "ofType": null
-              }
-            },
-            "args": [
-              {
-                "name": "address",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
-          },
           {
             "name": "login",
             "type": {
@@ -165,6 +172,56 @@ export default {
               },
               {
                 "name": "signature",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "refresh",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Query",
+        "fields": [
+          {
+            "name": "authenticationCode",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AuthenticationCode",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "address",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -205,11 +262,8 @@ export default {
           {
             "name": "access_token",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }

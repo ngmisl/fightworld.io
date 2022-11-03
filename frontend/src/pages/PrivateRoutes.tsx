@@ -1,11 +1,11 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { Auth, AuthContext } from "~/context/AuthContext";
-import { useContext } from "react";
+import { useSnapshot } from "valtio";
+import authStore from "~/authStore";
 
 export function PrivateRoutes() {
-  const { auth } = useContext(AuthContext) as Auth;
+  const auth = useSnapshot(authStore);
 
   return (
-        auth.access_token ? <Outlet /> : <Navigate to="/login" replace />
+        auth.accessToken ? <Outlet /> : <Navigate to="/login" replace />
   );
 }
