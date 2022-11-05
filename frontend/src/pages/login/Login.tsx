@@ -11,9 +11,9 @@ export function Login() {
   if (!auth.address) return <RequestAccounts />;
 
   // Fetches code and request to sign with metamask
-  if (!auth.signature && !auth.accessToken) return <RequestSignature />;
+  if (auth.address && !auth.signature) return <RequestSignature />;
 
   // Automatically tries to login
-  if (!auth.accessToken) return <RequestLogin />;
+  if (auth.signature && !auth.accessToken) return <RequestLogin />;
   return <></>;
 }

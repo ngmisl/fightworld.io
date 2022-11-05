@@ -5,8 +5,8 @@ import { verifyMessage } from "ethers/lib/utils";
 import { generateCode } from "~/utilities/generateCode";
 
 export const authenticate = async (address: string, signature: string) => {
-  const user = await db.selectFrom("auth").where("address", "=", address).selectAll().executeTakeFirst();
-  if (!user) return undefined;
+  const user = await db.selectFrom("auth").where("address", "=", address.toLowerCase()).selectAll().executeTakeFirst();
+  if (!user) return null;
   const verifiedAddress = verifyMessage(user.code.toString(), signature);
   const addressMatches = address.toLowerCase() === verifiedAddress.toLowerCase();
   if (!addressMatches) return undefined;
