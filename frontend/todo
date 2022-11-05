@@ -1,2 +1,2 @@
-- Disconnecting from wallet makes it difficult to sign in on first try for some reason.
-- Make prettier code
+- create something to render when logged in
+- refresh when access token expires
