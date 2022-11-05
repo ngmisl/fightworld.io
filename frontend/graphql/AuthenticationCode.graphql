@@ -1,4 +1,4 @@
-query AuthenticationCode($address: ID!) {
+mutation Code($address: ID!) {
   authenticationCode(address: $address) {
     code
   }

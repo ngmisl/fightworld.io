@@ -11,13 +11,13 @@ type LogoutResponse {
 }
 
 type Mutation {
+  authenticationCode(address: ID!): AuthenticationCode!
   login(address: ID!, signature: String!): Tokens
   logout: LogoutResponse
   refresh(address: ID!): Tokens
 }
 
 type Query {
-  authenticationCode(address: ID!): AuthenticationCode!
   user(address: ID!): User
 }
 

@@ -1,2 +1,2 @@
-- Finish up authExchange and test it in main.tsx
-- Make sure login flow still works after implimentation
+- Disconnecting from wallet makes it difficult to sign in on first try for some reason.
+- Make prettier code

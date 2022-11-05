@@ -1,4 +1,4 @@
-import { idArg, nonNull, objectType, queryField } from "nexus";
+import { idArg, mutationField, nonNull, objectType, queryField } from "nexus";
 import { getCode } from "./queryCode";
 
 export const AuthenticationCode = objectType({
@@ -8,7 +8,7 @@ export const AuthenticationCode = objectType({
   },
 });
 
-export const AuthenticationCodeQuery = queryField((t) => {
+export const AuthenticationCodeQuery = mutationField((t) => {
   t.nonNull.field("authenticationCode", {
     type: AuthenticationCode,
     args: {

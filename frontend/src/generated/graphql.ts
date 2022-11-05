@@ -7,16 +7,16 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export const AuthenticationCodeDocument = gql`
-    query AuthenticationCode($address: ID!) {
+export const CodeDocument = gql`
+    mutation Code($address: ID!) {
   authenticationCode(address: $address) {
     code
   }
 }
     `;
 
-export function useAuthenticationCodeQuery(options: Omit<Urql.UseQueryArgs<AuthenticationCodeQueryVariables>, 'query'>) {
-  return Urql.useQuery<AuthenticationCodeQuery, AuthenticationCodeQueryVariables>({ query: AuthenticationCodeDocument, ...options });
+export function useCodeMutation() {
+  return Urql.useMutation<CodeMutation, CodeMutationVariables>(CodeDocument);
 };
 export const LoginDocument = gql`
     mutation Login($address: ID!, $signature: String!) {
@@ -65,11 +65,22 @@ export type AuthenticationCode = {
   code: Scalars['Int'];
 };
 
+export type LogoutResponse = {
+  __typename?: 'LogoutResponse';
+  address?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  authenticationCode: AuthenticationCode;
   login?: Maybe<Tokens>;
-  logout?: Maybe<Yolo>;
+  logout?: Maybe<LogoutResponse>;
   refresh?: Maybe<Tokens>;
+};
+
+
+export type MutationAuthenticationCodeArgs = {
+  address: Scalars['ID'];
 };
 
 
@@ -85,13 +96,7 @@ export type MutationRefreshArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  authenticationCode: AuthenticationCode;
   user?: Maybe<User>;
-};
-
-
-export type QueryAuthenticationCodeArgs = {
-  address: Scalars['ID'];
 };
 
 
@@ -109,17 +114,12 @@ export type User = {
   address: Scalars['String'];
 };
 
-export type Yolo = {
-  __typename?: 'Yolo';
-  address?: Maybe<Scalars['String']>;
-};
-
-export type AuthenticationCodeQueryVariables = Exact<{
+export type CodeMutationVariables = Exact<{
   address: Scalars['ID'];
 }>;
 
 
-export type AuthenticationCodeQuery = { __typename?: 'Query', authenticationCode: { __typename?: 'AuthenticationCode', code: number } };
+export type CodeMutation = { __typename?: 'Mutation', authenticationCode: { __typename?: 'AuthenticationCode', code: number } };
 
 export type LoginMutationVariables = Exact<{
   address: Scalars['ID'];
@@ -132,7 +132,7 @@ export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'T
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'Yolo', address?: string | null } | null };
+export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'LogoutResponse', address?: string | null } | null };
 
 export type RefreshMutationVariables = Exact<{
   address: Scalars['ID'];
@@ -172,8 +172,46 @@ export default {
       },
       {
         "kind": "OBJECT",
+        "name": "LogoutResponse",
+        "fields": [
+          {
+            "name": "address",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
         "name": "Mutation",
         "fields": [
+          {
+            "name": "authenticationCode",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AuthenticationCode",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
           {
             "name": "login",
             "type": {
@@ -208,7 +246,7 @@ export default {
             "name": "logout",
             "type": {
               "kind": "OBJECT",
-              "name": "Yolo",
+              "name": "LogoutResponse",
               "ofType": null
             },
             "args": []
@@ -240,29 +278,6 @@ export default {
         "kind": "OBJECT",
         "name": "Query",
         "fields": [
-          {
-            "name": "authenticationCode",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "AuthenticationCode",
-                "ofType": null
-              }
-            },
-            "args": [
-              {
-                "name": "address",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
-          },
           {
             "name": "user",
             "type": {
@@ -313,21 +328,6 @@ export default {
                 "kind": "SCALAR",
                 "name": "Any"
               }
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Yolo",
-        "fields": [
-          {
-            "name": "address",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
             },
             "args": []
           }

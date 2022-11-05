@@ -60,12 +60,12 @@ export interface NexusGenFieldTypes {
     address: string | null; // String
   }
   Mutation: { // field return type
+    authenticationCode: NexusGenRootTypes['AuthenticationCode']; // AuthenticationCode!
     login: NexusGenRootTypes['Tokens'] | null; // Tokens
     logout: NexusGenRootTypes['LogoutResponse'] | null; // LogoutResponse
     refresh: NexusGenRootTypes['Tokens'] | null; // Tokens
   }
   Query: { // field return type
-    authenticationCode: NexusGenRootTypes['AuthenticationCode']; // AuthenticationCode!
     user: NexusGenRootTypes['User'] | null; // User
   }
   Tokens: { // field return type
@@ -84,12 +84,12 @@ export interface NexusGenFieldTypeNames {
     address: 'String'
   }
   Mutation: { // field return type name
+    authenticationCode: 'AuthenticationCode'
     login: 'Tokens'
     logout: 'LogoutResponse'
     refresh: 'Tokens'
   }
   Query: { // field return type name
-    authenticationCode: 'AuthenticationCode'
     user: 'User'
   }
   Tokens: { // field return type name
@@ -102,6 +102,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    authenticationCode: { // args
+      address: string; // ID!
+    }
     login: { // args
       address: string; // ID!
       signature: string; // String!
@@ -111,9 +114,6 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
-    authenticationCode: { // args
-      address: string; // ID!
-    }
     user: { // args
       address: string; // ID!
     }
