@@ -18,8 +18,7 @@ const getAddressFromToken = (request: ExpressContext) => {
 
 export interface Context {
   request: Request,
-  response: Response,
-  user: {
+  response: Response, user: {
     address: string,
     access_token: string,
     issuedAt: Date,
