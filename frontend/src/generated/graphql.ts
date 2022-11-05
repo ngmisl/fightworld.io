@@ -29,6 +29,17 @@ export const LoginDocument = gql`
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
+export const LogoutDocument = gql`
+    mutation Logout {
+  logout {
+    address
+  }
+}
+    `;
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
+};
 export const RefreshDocument = gql`
     mutation Refresh($address: ID!) {
   refresh(address: $address) {
@@ -57,6 +68,7 @@ export type AuthenticationCode = {
 export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<Tokens>;
+  logout?: Maybe<Yolo>;
   refresh?: Maybe<Tokens>;
 };
 
@@ -97,6 +109,11 @@ export type User = {
   address: Scalars['String'];
 };
 
+export type Yolo = {
+  __typename?: 'Yolo';
+  address?: Maybe<Scalars['String']>;
+};
+
 export type AuthenticationCodeQueryVariables = Exact<{
   address: Scalars['ID'];
 }>;
@@ -111,6 +128,11 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Tokens', access_token?: string | null } | null };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'Yolo', address?: string | null } | null };
 
 export type RefreshMutationVariables = Exact<{
   address: Scalars['ID'];
@@ -181,6 +203,15 @@ export default {
                 }
               }
             ]
+          },
+          {
+            "name": "logout",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Yolo",
+              "ofType": null
+            },
+            "args": []
           },
           {
             "name": "refresh",
@@ -282,6 +313,21 @@ export default {
                 "kind": "SCALAR",
                 "name": "Any"
               }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Yolo",
+        "fields": [
+          {
+            "name": "address",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }

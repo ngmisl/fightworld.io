@@ -4,24 +4,19 @@ import authStore from "~/authStore";
 import { useLoginMutation } from "~/generated/graphql";
 
 export function RequestLogin() {
-    const auth = useSnapshot(authStore);
-    
-      const [result, query] = useLoginMutation()
-      useEffect(() => {
-        query({ address: auth.address!, signature: auth.signature!});
-      }, [auth.signature])
+  const auth = useSnapshot(authStore);
 
-      const access_token = result.data?.login?.access_token ?? null;
-      useEffect(() => {
-        auth.setAccessToken(access_token)
-      }, [access_token]);
+  const [result, query] = useLoginMutation()
+  useEffect(() => {
+    query({ address: auth.address!, signature: auth.signature! });
+  }, [auth.signature])
 
-      const log = () => {
-        console.log(auth)
-      }
+  const access_token = result.data?.login?.access_token ?? null;
+  useEffect(() => {
+    auth.setAccessToken(access_token)
+  }, [access_token]);
 
-      return <>
-      <button onClick={log}>Log</button>
-        <button disabled={true}>Loading...</button>
-      </>
+  return <>
+    <button disabled={true}>Loading...</button>
+  </>
 }

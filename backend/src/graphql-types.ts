@@ -31,6 +31,9 @@ export interface NexusGenObjects {
   AuthenticationCode: { // root type
     code: number; // Int!
   }
+  LogoutResponse: { // root type
+    address?: string | null; // String
+  }
   Mutation: {};
   Query: {};
   Tokens: { // root type
@@ -53,8 +56,12 @@ export interface NexusGenFieldTypes {
   AuthenticationCode: { // field return type
     code: number; // Int!
   }
+  LogoutResponse: { // field return type
+    address: string | null; // String
+  }
   Mutation: { // field return type
     login: NexusGenRootTypes['Tokens'] | null; // Tokens
+    logout: NexusGenRootTypes['LogoutResponse'] | null; // LogoutResponse
     refresh: NexusGenRootTypes['Tokens'] | null; // Tokens
   }
   Query: { // field return type
@@ -73,8 +80,12 @@ export interface NexusGenFieldTypeNames {
   AuthenticationCode: { // field return type name
     code: 'Int'
   }
+  LogoutResponse: { // field return type name
+    address: 'String'
+  }
   Mutation: { // field return type name
     login: 'Tokens'
+    logout: 'LogoutResponse'
     refresh: 'Tokens'
   }
   Query: { // field return type name

@@ -11,6 +11,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("address", "varchar(50)", (col) =>col.primaryKey().references("user.address").onDelete('cascade'))
     .addColumn("code", "integer", (col) => col.notNull())
     .addColumn("refresh_token", "varchar(500)")
+    .addColumn("access_token", "varchar(500)")
     .execute();
 }
 

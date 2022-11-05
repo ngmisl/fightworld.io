@@ -14,7 +14,7 @@ export const authenticate = async (address: string, signature: string) => {
     const access_token = sign({address}, enviroment.ACCESS_TOKEN_SECRET, { expiresIn: 1000 * 60 * 10});
     const refresh_token = sign({address}, enviroment.ACCESS_TOKEN_SECRET, { expiresIn: "2d"});
     
-    await db.updateTable("auth").set({ code: generateCode(), refresh_token }).where("address", "=", address).executeTakeFirstOrThrow();
+    await db.updateTable("auth").set({ code: generateCode(), refresh_token, access_token }).where("address", "=", address).executeTakeFirstOrThrow();
     
     return {
         access_token: access_token,

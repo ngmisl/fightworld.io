@@ -16,7 +16,6 @@ const client = createClient({
   exchanges: [dedupExchange, cacheExchange, authExchange<{ access_token: string }>({
     addAuthToOperation: ({ operation }) => {
       const auth = snapshot(authStore);
-      console.log(auth)
       if (!auth.accessToken) {
         return operation;
       }

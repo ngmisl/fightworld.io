@@ -1,4 +1,5 @@
 export interface Auth {
+  access_token: string | null;
   address: string;
   code: number;
   refresh_token: string | null;

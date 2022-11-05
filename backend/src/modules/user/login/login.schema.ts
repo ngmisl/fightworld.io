@@ -11,6 +11,7 @@ export const LoginQuery = mutationField((t) => {
       signature: nonNull(stringArg())
     },
     resolve: async (_, { address, signature }, ctx) => {
+      console.log("login")
       const tokens = await authenticate(address, signature)
       if(!tokens) {
         ctx.response.cookie("refresh_token", "invalid_refresh_token", {

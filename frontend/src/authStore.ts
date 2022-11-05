@@ -3,18 +3,18 @@ import { proxy } from "valtio"
 
 export interface AuthStore {
     address: string | null;
-    setAddress: (address: string) => void;
+    setAddress: (address: string | null) => void;
     code: number | null;
     setCode: (code: number | null) => void;
     accessToken: string | null;
     setAccessToken: (accessToken: string | null) => void;
     signature: string | null;
-    setSignature: (signature: string) => void;
+    setSignature: (signature: string | null) => void;
 }
 
 const authStore = proxy<AuthStore>({
     address: null,
-    setAddress(address: string) {
+    setAddress(address: string | null) {
         authStore.address = address
     },
     code: null,
@@ -26,7 +26,7 @@ const authStore = proxy<AuthStore>({
         authStore.accessToken = accessToken
     },
     signature: null,
-    setSignature(signature: string) {
+    setSignature(signature: string | null) {
         authStore.signature = signature
     }
 })
