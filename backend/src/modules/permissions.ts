@@ -18,6 +18,7 @@ const isLoggedIn = rule()(async (_, __, ctx) => {
 export const permissions = shield({
   Query: {
     "*": deny,
+    me: isPublic,
   },
   Mutation: {
     "*": deny,

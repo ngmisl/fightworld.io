@@ -1,0 +1,9 @@
+query Me {
+  me {
+    address
+    characters {
+      id
+      level
+    }
+  }
+}

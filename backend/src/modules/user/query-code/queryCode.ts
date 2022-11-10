@@ -1,6 +1,6 @@
 import { db } from "~/db";
-import { generateCode } from "~/utilities/generateCode";
-import { getUser } from "../query-user/queryUser";
+import { generateCode } from "~/utilities";
+import { getUser } from "~/modules/user";
 
 export const getCode = async (address: string) => {
   const randomInteger = generateCode();

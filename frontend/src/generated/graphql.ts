@@ -40,6 +40,21 @@ export const LogoutDocument = gql`
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
 };
+export const MeDocument = gql`
+    query Me {
+  me {
+    address
+    characters {
+      id
+      level
+    }
+  }
+}
+    `;
+
+export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
+  return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
 export const RefreshDocument = gql`
     mutation Refresh($address: ID!) {
   refresh(address: $address) {
@@ -63,6 +78,12 @@ export type Scalars = {
 export type AuthenticationCode = {
   __typename?: 'AuthenticationCode';
   code: Scalars['Int'];
+};
+
+export type Character = {
+  __typename?: 'Character';
+  id: Scalars['ID'];
+  level: Scalars['Int'];
 };
 
 export type LogoutResponse = {
@@ -96,12 +117,7 @@ export type MutationRefreshArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  user?: Maybe<User>;
-};
-
-
-export type QueryUserArgs = {
-  address: Scalars['ID'];
+  me?: Maybe<User>;
 };
 
 export type Tokens = {
@@ -112,6 +128,7 @@ export type Tokens = {
 export type User = {
   __typename?: 'User';
   address: Scalars['String'];
+  characters: Array<Character>;
 };
 
 export type CodeMutationVariables = Exact<{
@@ -133,6 +150,11 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'LogoutResponse', address?: string | null } | null };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', address: string, characters: Array<{ __typename?: 'Character', id: string, level: number }> } | null };
 
 export type RefreshMutationVariables = Exact<{
   address: Scalars['ID'];
@@ -158,6 +180,35 @@ export default {
         "fields": [
           {
             "name": "code",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Character",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "level",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -279,24 +330,13 @@ export default {
         "name": "Query",
         "fields": [
           {
-            "name": "user",
+            "name": "me",
             "type": {
               "kind": "OBJECT",
               "name": "User",
               "ofType": null
             },
-            "args": [
-              {
-                "name": "address",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
+            "args": []
           }
         ],
         "interfaces": []
@@ -327,6 +367,24 @@ export default {
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "characters",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Character",
+                    "ofType": null
+                  }
+                }
               }
             },
             "args": []

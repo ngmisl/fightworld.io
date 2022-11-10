@@ -2,7 +2,7 @@ import { sign } from "jsonwebtoken";
 import { enviroment } from "~/config/enviroment";
 import { db } from "~/db";
 import { verifyMessage } from "ethers/lib/utils";
-import { generateCode } from "~/utilities/generateCode";
+import { generateCode } from "~/utilities";
 
 export const authenticate = async (address: string, signature: string) => {
   const user = await db.selectFrom("auth").where("address", "=", address.toLowerCase()).selectAll().executeTakeFirst();

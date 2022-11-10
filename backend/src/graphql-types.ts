@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type * as db from "./db/database-schema"
+
 import type { Context as Context } from "./context"
 
 
@@ -31,6 +31,10 @@ export interface NexusGenObjects {
   AuthenticationCode: { // root type
     code: number; // Int!
   }
+  Character: { // root type
+    id: string; // ID!
+    level: number; // Int!
+  }
   LogoutResponse: { // root type
     address?: string | null; // String
   }
@@ -39,7 +43,9 @@ export interface NexusGenObjects {
   Tokens: { // root type
     access_token?: string | null; // String
   }
-  User: db.User;
+  User: { // root type
+    address: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -56,6 +62,10 @@ export interface NexusGenFieldTypes {
   AuthenticationCode: { // field return type
     code: number; // Int!
   }
+  Character: { // field return type
+    id: string; // ID!
+    level: number; // Int!
+  }
   LogoutResponse: { // field return type
     address: string | null; // String
   }
@@ -66,19 +76,24 @@ export interface NexusGenFieldTypes {
     refresh: NexusGenRootTypes['Tokens'] | null; // Tokens
   }
   Query: { // field return type
-    user: NexusGenRootTypes['User'] | null; // User
+    me: NexusGenRootTypes['User'] | null; // User
   }
   Tokens: { // field return type
     access_token: string | null; // String
   }
   User: { // field return type
     address: string; // String!
+    characters: NexusGenRootTypes['Character'][]; // [Character!]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
   AuthenticationCode: { // field return type name
     code: 'Int'
+  }
+  Character: { // field return type name
+    id: 'ID'
+    level: 'Int'
   }
   LogoutResponse: { // field return type name
     address: 'String'
@@ -90,13 +105,14 @@ export interface NexusGenFieldTypeNames {
     refresh: 'Tokens'
   }
   Query: { // field return type name
-    user: 'User'
+    me: 'User'
   }
   Tokens: { // field return type name
     access_token: 'String'
   }
   User: { // field return type name
     address: 'String'
+    characters: 'Character'
   }
 }
 
@@ -110,11 +126,6 @@ export interface NexusGenArgTypes {
       signature: string; // String!
     }
     refresh: { // args
-      address: string; // ID!
-    }
-  }
-  Query: {
-    user: { // args
       address: string; // ID!
     }
   }
