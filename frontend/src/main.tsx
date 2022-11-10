@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { cacheExchange, createClient, dedupExchange, fetchExchange, makeOperation, Provider } from "urql";
+import { createClient, dedupExchange, fetchExchange, makeOperation, Provider } from "urql";
 import { authExchange } from "@urql/exchange-auth";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -15,7 +15,6 @@ const client = createClient({
   url: "http://localhost:4000/graphql",
   exchanges: [
     dedupExchange,
-    cacheExchange,
     authExchange<{ access_token: string }>({
       addAuthToOperation: ({ authState, operation }) => {
         if (!authState) {
