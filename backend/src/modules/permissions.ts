@@ -1,4 +1,6 @@
 import { deny, rule, shield } from "graphql-shield";
+import { verify } from "jsonwebtoken";
+import { enviroment } from "~/config/enviroment";
 import { db } from "~/db";
 
 const isPublic = rule()(() => true);
@@ -11,14 +13,14 @@ const isLoggedIn = rule()(async (_, __, ctx) => {
   const user = await db.selectFrom("auth").where("address", "=", address).selectAll().executeTakeFirst();
   if (user && user.access_token !== ctx.user.access_token) return false;
 
-  //Valid token
-  return new Date() < ctx.user.expireAt;
+  verify(ctx.user.access_token, enviroment.ACCESS_TOKEN_SECRET);
+  return true;
 });
 
 export const permissions = shield({
   Query: {
     "*": deny,
-    me: isPublic,
+    me: isLoggedIn,
   },
   Mutation: {
     "*": deny,

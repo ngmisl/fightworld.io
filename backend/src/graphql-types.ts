@@ -76,7 +76,7 @@ export interface NexusGenFieldTypes {
     refresh: NexusGenRootTypes['Tokens'] | null; // Tokens
   }
   Query: { // field return type
-    me: NexusGenRootTypes['User'] | null; // User
+    me: NexusGenRootTypes['User']; // User!
   }
   Tokens: { // field return type
     access_token: string | null; // String

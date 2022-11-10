@@ -10,11 +10,14 @@
     "generate": "graphql-codegen --config codegen.yml --watch"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@metamask/detect-provider": "^2.0.0",
     "@urql/exchange-auth": "^1.0.0",
     "ethers": "^5.7.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^8.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { cacheExchange, createClient, dedupExchange, fetchExchange, makeOperation, Provider } from "urql";
 import { authExchange } from "@urql/exchange-auth";
@@ -10,6 +9,7 @@ import "./index.css";
 import { RefreshDocument, RefreshMutation } from "./generated/graphql";
 import { snapshot } from "valtio";
 import authStore from "~/authStore";
+import { decode } from "jsonwebtoken";
 
 const client = createClient({
   url: "http://localhost:4000/graphql",
@@ -17,9 +17,8 @@ const client = createClient({
     dedupExchange,
     cacheExchange,
     authExchange<{ access_token: string }>({
-      addAuthToOperation: ({ operation }) => {
-        const auth = snapshot(authStore);
-        if (!auth.accessToken) {
+      addAuthToOperation: ({ authState, operation }) => {
+        if (!authState) {
           return operation;
         }
 
@@ -34,27 +33,35 @@ const client = createClient({
             ...fetchOptions,
             headers: {
               ...fetchOptions.headers,
-              Authorization: auth.accessToken,
+              Authorization: authState.access_token,
             },
           },
         });
       },
-      getAuth: async ({ mutate }) => {
+      willAuthError: ({ authState }) => {
+        if (!authState) return false;
+        const decoded = decode(authState.access_token) as { address: string; iat: number; exp: number };
+        if (new Date() > new Date(decoded.exp * 1000)) {
+          return true;
+        }
+        return false;
+      },
+      getAuth: async ({ authState, mutate }) => {
         const auth = snapshot(authStore);
         const address = window.ethereum?.selectedAddress ?? auth.address;
         if (!address) return null;
         auth.setAddress(address);
 
-        if (!auth.accessToken) {
-          const result = await mutate<RefreshMutation>(RefreshDocument, { address });
-          const access_token = result.data?.refresh?.access_token ?? null;
-          if (!access_token) return null;
-          auth.setAccessToken(access_token);
-          return {
-            access_token,
-          };
+        const result = await mutate<RefreshMutation>(RefreshDocument, { address });
+        const access_token = result.data?.refresh?.access_token ?? null;
+        if (!access_token) {
+          auth.setAccessToken(null);
+          return null;
         }
-        return null;
+        auth.setAccessToken(access_token);
+        return {
+          access_token,
+        };
       },
     }),
     fetchExchange,

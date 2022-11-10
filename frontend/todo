@@ -1,5 +1,3 @@
-- create something to render when logged in
-- refresh when access token expires
 - Add lint script
 - typechecking script
 - build script
