@@ -1,9 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn backend format:ci
-yarn backend typecheck
-yarn backend lint
-yarn frontend format:ci
-yarn frontend typecheck
-yarn frontend lint
+yarn lint-staged

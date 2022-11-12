@@ -3,7 +3,9 @@
   "workspaces": [
     "./*"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lint-staged": "^13.0.3"
+  },
   "devDependencies": {
     "husky": "^8.0.0"
   },
@@ -11,5 +13,15 @@
     "backend": "yarn workspace @app/backend",
     "frontend": "yarn workspace @app/frontend",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{css,html,js,scss,ts,tsx,jsx}": [
+      "yarn backend format:ci",
+      "yarn backend typecheck",
+      "yarn backend lint",
+      "yarn frontend format:ci",
+      "yarn frontend typecheck",
+      "yarn frontend lint"
+    ]
   }
 }
