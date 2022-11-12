@@ -16,7 +16,6 @@
   },
   "lint-staged": {
     "**/*.{css,html,js,scss,ts,tsx,jsx}": [
-      "yarn workspaces run typecheck",
       "yarn workspaces run format"
     ]
   }
