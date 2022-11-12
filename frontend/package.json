@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "tsc && vite build",
     "format": "prettier --ignore-path .gitignore --write .",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint --max-warnings=0 src",
     "preview": "vite preview",
     "generate": "graphql-codegen --config codegen.yml --watch"
