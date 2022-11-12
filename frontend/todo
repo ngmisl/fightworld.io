@@ -1,5 +1,3 @@
-- Add lint script
-- typechecking script
-- build script
-- make pipeline
+- add checks on commit
 - add tailwind
+- make pipeline

@@ -1,4 +1,15 @@
 {
-  "dependencies": {
+  "private": true,
+  "workspaces": [
+    "./*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^8.0.0"
+  },
+  "scripts": {
+    "backend": "yarn workspace @app/backend",
+    "frontend": "yarn workspace @app/frontend",
+    "prepare": "husky install"
   }
 }
