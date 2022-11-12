@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch --tsconfig tsconfig.json src",
+    "build": "tsc",
+    "format": "prettier --ignore-path .gitignore --write .",
     "generate": "ts-node --transpile-only src/schema",
     "db:generate": "ts-node src/db/scripts/db-generate.ts",
     "db:migrate": "ts-node src/db/scripts/db-migrate-up.ts",

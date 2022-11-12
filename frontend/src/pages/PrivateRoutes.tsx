@@ -5,7 +5,5 @@ import authStore from "~/authStore";
 export function PrivateRoutes() {
   const auth = useSnapshot(authStore);
 
-  return (
-        auth.accessToken ? <Outlet /> : <Navigate to="/login" replace />
-  );
+  return auth.accessToken ? <Outlet /> : <Navigate to="/login" replace />;
 }

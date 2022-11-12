@@ -18,7 +18,7 @@ export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
 
   const schemaWithPermissions = applyMiddleware(schema, permissions);
 
-  app.use(cookieParser())
+  app.use(cookieParser());
 
   const server = new ApolloServer({
     context: createContext,
@@ -28,14 +28,15 @@ export const start = async (schema: core.NexusGraphQLSchema, port: string) => {
   });
   await server.start();
 
-  server.applyMiddleware({ app, cors: {
-    origin: ['http://localhost:5173', 'https://studio.apollographql.com'],
-    credentials: true,
-  } });
+  server.applyMiddleware({
+    app,
+    cors: {
+      origin: ["http://localhost:5173", "https://studio.apollographql.com"],
+      credentials: true,
+    },
+  });
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
-  console.log(
-    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
-  );
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 };
 
 start(createSchema("src/schema.graphql", types), "4000");
