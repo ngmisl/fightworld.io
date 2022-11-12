@@ -2,13 +2,11 @@ import authStore from "~/authStore";
 import { useLogoutMutation, useMeQuery } from "~/generated/graphql";
 
 export function Home() {
-  const [result, query] = useLogoutMutation();
+  const [, query] = useLogoutMutation();
 
-  const [me, meQuery] = useMeQuery({
+  const [, meQuery] = useMeQuery({
     pause: true,
   });
-
-  console.log(me);
 
   const logout = () => {
     query({});

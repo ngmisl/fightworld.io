@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 import * as Urql from "urql";
+
+import { IntrospectionQuery } from "graphql";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -173,8 +175,6 @@ export type RefreshMutation = {
   __typename?: "Mutation";
   refresh?: { __typename?: "Tokens"; access_token?: string | null } | null;
 };
-
-import { IntrospectionQuery } from "graphql";
 export default {
   __schema: {
     queryType: {

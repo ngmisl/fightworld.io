@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "tsc && vite build",
     "format": "prettier --ignore-path .gitignore --write .",
+    "lint": "eslint --max-warnings=0 src",
     "preview": "vite preview",
     "generate": "graphql-codegen --config codegen.yml --watch"
   },
@@ -38,6 +39,8 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
+    "eslint": "^8.0.0",
+    "eslint-config-react-app": "^7.0.1",
     "typescript": "^4.6.4",
     "vite": "^3.1.0"
   }
