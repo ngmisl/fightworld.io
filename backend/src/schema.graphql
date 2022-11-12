@@ -23,7 +23,7 @@ type Mutation {
 }
 
 type Query {
-  me: User!
+  me: User
 }
 
 type Tokens {

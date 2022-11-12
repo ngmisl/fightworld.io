@@ -10,7 +10,7 @@ export const User = objectType({
 });
 
 export const MeQuery = queryField((t) => {
-  t.nonNull.field("me", {
+  t.field("me", {
     type: User,
     resolve: (_, __, ctx) => getUser(addressFromContext(ctx)),
   });

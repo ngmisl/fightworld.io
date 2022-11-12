@@ -7,7 +7,6 @@
     "dev": "vite dev",
     "build": "tsc && vite build",
     "format": "prettier --ignore-path .gitignore --write .",
-    "format:ci": "prettier --ignore-path .gitignore --check .",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ignore-path .gitignore .",
     "preview": "vite preview",

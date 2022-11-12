@@ -12,7 +12,7 @@
 
     /* Modules */
     "module": "CommonJS",
-
+    "moduleResolution": "Node",
     /* Emit */
     "removeComments": true,
 

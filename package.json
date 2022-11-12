@@ -16,11 +16,9 @@
   },
   "lint-staged": {
     "**/*.{css,html,js,scss,ts,tsx,jsx}": [
-      "yarn backend format:ci",
-      "yarn backend typecheck",
+      "yarn backend format",
+      "yarn frontend format",
       "yarn backend lint",
-      "yarn frontend format:ci",
-      "yarn frontend typecheck",
       "yarn frontend lint"
     ]
   }
