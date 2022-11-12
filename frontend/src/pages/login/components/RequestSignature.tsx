@@ -5,7 +5,7 @@ import { useSnapshot } from "valtio";
 import authStore from "~/authStore";
 import { useCodeMutation } from "~/generated/graphql";
 
-export function RequestSignature() {
+export const RequestSignature = () => {
   const auth = useSnapshot(authStore);
 
   const ethersProvider = new providers.Web3Provider(window.ethereum);
@@ -49,4 +49,4 @@ export function RequestSignature() {
     );
 
   return <button onClick={handleConnect}>Click to sign in</button>;
-}
+};

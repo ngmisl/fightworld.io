@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useSnapshot } from "valtio";
 import authStore from "~/authStore";
 
-export function RequestAccounts() {
+export const RequestAccounts = () => {
   const auth = useSnapshot(authStore);
 
   const ethersProvider = new providers.Web3Provider(window.ethereum);
@@ -38,4 +38,4 @@ export function RequestAccounts() {
     );
 
   return <button onClick={handleConnect}>Click to connect</button>;
-}
+};

@@ -3,7 +3,7 @@ import { useSnapshot } from "valtio";
 import authStore from "~/authStore";
 import { useLoginMutation } from "~/generated/graphql";
 
-export function RequestLogin() {
+export const RequestLogin = () => {
   const auth = useSnapshot(authStore);
   const [result, loginMutation] = useLoginMutation();
 
@@ -21,4 +21,4 @@ export function RequestLogin() {
       <button disabled={true}>Logging in...</button>
     </>
   );
-}
+};

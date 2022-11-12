@@ -4,7 +4,7 @@ import { RequestLogin } from "./components/RequestLogin";
 import { useSnapshot } from "valtio";
 import authStore from "~/authStore";
 
-export function Login() {
+export const Login = () => {
   const auth = useSnapshot(authStore);
 
   // Ask to connect to metamask
@@ -16,4 +16,4 @@ export function Login() {
   // Automatically tries to login
   if (auth.signature && !auth.accessToken) return <RequestLogin />;
   return <></>;
-}
+};

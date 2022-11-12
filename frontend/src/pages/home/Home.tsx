@@ -1,12 +1,15 @@
 import authStore from "~/authStore";
 import { useLogoutMutation, useMeQuery } from "~/generated/graphql";
+import { Button } from "~/ui";
 
-export function Home() {
+export const Home = () => {
   const [, query] = useLogoutMutation();
 
-  const [, meQuery] = useMeQuery({
+  const [me, meQuery] = useMeQuery({
     pause: true,
   });
+
+  console.log(me);
 
   const logout = () => {
     query({});
@@ -17,7 +20,7 @@ export function Home() {
   return (
     <>
       <button onClick={logout}>Logout</button>
-      <button onClick={meQuery}>Fetch me data</button>
+      <Button onClick={meQuery}>Fetch me data</Button>
     </>
   );
-}
+};

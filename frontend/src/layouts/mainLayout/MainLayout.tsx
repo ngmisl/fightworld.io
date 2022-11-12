@@ -4,7 +4,7 @@ import { PrivateRoutes } from "~/pages/PrivateRoutes";
 import { PublicRoutes } from "~/pages/PublicRoutes";
 import { Home } from "~/pages/home/Home";
 
-export function MainLayout() {
+export const MainLayout = () => {
   return (
     <Routes>
       <Route element={<PrivateRoutes />}>
@@ -16,4 +16,4 @@ export function MainLayout() {
       </Route>
     </Routes>
   );
-}
+};
