@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development tsx watch --tsconfig tsconfig.json src",
     "build": "tsc",
     "format": "prettier --ignore-path .gitignore --write .",
+    "format:ci": "prettier --ignore-path .gitignore --check .",
     "lint": "eslint --ignore-path .gitignore .",
     "typecheck": "tsc --noEmit",
     "generate": "ts-node --transpile-only src/schema",
