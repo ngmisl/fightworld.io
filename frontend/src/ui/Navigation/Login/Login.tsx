@@ -2,7 +2,7 @@ import { RequestAccounts } from "./components/RequestAccounts";
 import { RequestSignature } from "./components/RequestSignature";
 import { RequestLogin } from "./components/RequestLogin";
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 
 export const Login = () => {
   const auth = useSnapshot(authStore);
@@ -15,5 +15,5 @@ export const Login = () => {
 
   // Automatically tries to login
   if (auth.signature && !auth.accessToken) return <RequestLogin />;
-  return <></>;
+  return <button disabled={true}>Loading...</button>;
 };

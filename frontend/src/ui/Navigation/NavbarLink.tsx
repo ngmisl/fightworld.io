@@ -9,7 +9,7 @@ export const NavbarLink: React.FC<Props> = (props) => {
     <li>
       <Link
         to={props.to}
-        className="px-5 py-1 text-white bg-blue-700 inline-block rounded-md border-solid border-black border-[1px]"
+        className="px-5 py-1 text-white bg-blue-700 inline-block rounded-sm border-solid border-black border-[1px]"
       >
         {props.children}
       </Link>

@@ -1,5 +1,6 @@
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 import { useLogoutMutation } from "~/generated/graphql";
+import { Button } from "../Button";
 
 export const Logout = () => {
   const [, query] = useLogoutMutation();
@@ -10,5 +11,9 @@ export const Logout = () => {
     authStore.setAccessToken(null);
   };
 
-  return <button onClick={logout}>Logout</button>;
+  return (
+    <Button type="warning" size="normal" onClick={logout}>
+      Logout
+    </Button>
+  );
 };

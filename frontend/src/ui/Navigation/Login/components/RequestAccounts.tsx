@@ -1,10 +1,13 @@
 import { providers } from "ethers";
 import { useQuery } from "react-query";
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
+import messageStore from "~/stores/messageStore";
+import { Button } from "~/ui/Button";
 
 export const RequestAccounts = () => {
   const auth = useSnapshot(authStore);
+  const message = useSnapshot(messageStore);
 
   const ethersProvider = new providers.Web3Provider(window.ethereum);
   const signer = ethersProvider.getSigner();
@@ -24,18 +27,24 @@ export const RequestAccounts = () => {
   );
 
   const handleConnect = async () => {
+    message.clearMessage();
     await requestAccountsResult.refetch();
   };
 
-  if (requestAccountsResult.isFetching) return <button disabled={true}>Waiting for connection...</button>;
+  if (requestAccountsResult.isError) {
+    message.setError("Failed to fetch account.");
+  }
 
-  if (requestAccountsResult.isError)
+  if (requestAccountsResult.isFetching)
     return (
-      <>
-        <button onClick={handleConnect}>Click to connect</button>
-        <span>Something went wrong trying to connect, try again</span>
-      </>
+      <Button type="secondary" size="normal" disabled={true}>
+        Waiting for connection...
+      </Button>
     );
 
-  return <button onClick={handleConnect}>Click to connect</button>;
+  return (
+    <Button type="primary" size="normal" onClick={handleConnect}>
+      Click to connect
+    </Button>
+  );
 };

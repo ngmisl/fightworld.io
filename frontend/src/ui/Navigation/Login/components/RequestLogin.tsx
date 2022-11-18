@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 import { useLoginMutation } from "~/generated/graphql";
 
 export const RequestLogin = () => {

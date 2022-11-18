@@ -1,5 +1,5 @@
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 import { Login } from "./Login";
 import { Logout } from "./Logout";
 import { NavbarLink } from "./NavbarLink";

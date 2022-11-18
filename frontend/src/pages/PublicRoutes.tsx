@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 
 export const PublicRoutes = () => {
   const auth = useSnapshot(authStore);

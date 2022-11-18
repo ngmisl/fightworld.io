@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { PrivateRoutes } from "~/pages/PrivateRoutes";
 import { PublicRoutes } from "~/pages/PublicRoutes";
 import { Home } from "~/pages/Home/Home";
-import { Navbar } from "~/ui";
+import { Message, Navbar } from "~/ui";
 import { User } from "~/pages/User/User";
 
 export const MainLayout = () => {
@@ -18,6 +18,7 @@ export const MainLayout = () => {
         </Route>
         <Route path="*" element={<h1>Invalid path</h1>} />
       </Routes>
+      <Message />
     </div>
   );
 };

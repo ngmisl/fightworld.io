@@ -8,7 +8,7 @@ import App from "./App";
 import "./index.css";
 import { RefreshDocument, RefreshMutation } from "./generated/graphql";
 import { snapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 import { decode } from "jsonwebtoken";
 
 const client = createClient({

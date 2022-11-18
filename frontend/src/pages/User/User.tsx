@@ -6,5 +6,9 @@ export const User = () => {
     pause: true,
   });
 
-  return <Button onClick={meQuery}>Fetch me data</Button>;
+  return (
+    <Button type="primary" size="normal" onClick={meQuery}>
+      Fetch me data
+    </Button>
+  );
 };

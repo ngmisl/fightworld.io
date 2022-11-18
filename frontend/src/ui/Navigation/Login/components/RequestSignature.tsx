@@ -2,11 +2,14 @@ import { providers } from "ethers";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSnapshot } from "valtio";
-import authStore from "~/authStore";
+import authStore from "~/stores/authStore";
 import { useCodeMutation } from "~/generated/graphql";
+import { Button } from "~/ui/Button";
+import messageStore from "~/stores/messageStore";
 
 export const RequestSignature = () => {
   const auth = useSnapshot(authStore);
+  const message = useSnapshot(messageStore);
 
   const ethersProvider = new providers.Web3Provider(window.ethereum);
   const signer = ethersProvider.getSigner();
@@ -35,18 +38,24 @@ export const RequestSignature = () => {
   }, [code]);
 
   const handleConnect = async () => {
+    message.clearMessage();
     await codeMutation({ address: auth.address! });
   };
 
-  if (signMessageResult.isFetching) return <button disabled={true}>Waiting for signature...</button>;
+  if (signMessageResult.isError) {
+    message.setError("Something went wrong trying to connect, try again.");
+  }
 
-  if (signMessageResult.isError)
+  if (signMessageResult.isFetching)
     return (
-      <>
-        <button onClick={handleConnect}>Click to sign in</button>
-        <span>Something went wrong trying to connect, try again</span>
-      </>
+      <Button type="secondary" size="normal" disabled={true}>
+        Waiting for signature...
+      </Button>
     );
 
-  return <button onClick={handleConnect}>Click to sign in</button>;
+  return (
+    <Button type="primary" size="normal" onClick={handleConnect}>
+      Click to sign in
+    </Button>
+  );
 };
