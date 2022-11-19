@@ -1,14 +1,10 @@
-import { useMeQuery } from "~/generated/graphql";
-import { Button } from "~/ui";
+import { SuspenseCustom } from "~/ui";
+import Inventory from "./Inventory";
 
 export const User = () => {
-  const [, meQuery] = useMeQuery({
-    pause: true,
-  });
-
   return (
-    <Button type="primary" size="normal" onClick={meQuery}>
-      Fetch me data
-    </Button>
+    <SuspenseCustom type="spinner">
+      <Inventory />
+    </SuspenseCustom>
   );
 };

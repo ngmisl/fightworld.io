@@ -114,7 +114,7 @@ export type MutationRefreshArgs = {
 
 export type Query = {
   __typename?: "Query";
-  me?: Maybe<User>;
+  me: User;
 };
 
 export type Tokens = {
@@ -158,11 +158,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
   __typename?: "Query";
-  me?: {
+  me: {
     __typename?: "User";
     address: string;
     characters: Array<{ __typename?: "Character"; id: string; level: number }>;
-  } | null;
+  };
 };
 
 export type RefreshMutationVariables = Exact<{
@@ -343,9 +343,12 @@ export default {
           {
             name: "me",
             type: {
-              kind: "OBJECT",
-              name: "User",
-              ofType: null,
+              kind: "NON_NULL",
+              ofType: {
+                kind: "OBJECT",
+                name: "User",
+                ofType: null,
+              },
             },
             args: [],
           },

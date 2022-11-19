@@ -1,0 +1,1 @@
+export { SuspenseCustom } from "./SuspenseCustom";

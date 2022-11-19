@@ -1,6 +1,6 @@
 interface Props {
   onClick?: () => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   disabled?: boolean;
   type: "primary" | "secondary" | "warning";
   size: "normal" | "small";

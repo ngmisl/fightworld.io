@@ -13,6 +13,7 @@ import { decode } from "jsonwebtoken";
 
 const client = createClient({
   url: "http://localhost:4000/graphql",
+  suspense: true,
   exchanges: [
     dedupExchange,
     authExchange<{ access_token: string }>({

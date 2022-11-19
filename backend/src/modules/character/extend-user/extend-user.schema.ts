@@ -15,7 +15,7 @@ export const CharactersOnUser = extendType({
   definition(t) {
     t.nonNull.list.nonNull.field("characters", {
       type: Character,
-      resolve: async (_, __, ctx) => getUserCharacters(addressFromContext(ctx)),
+      resolve: (_, __, ctx) => getUserCharacters(addressFromContext(ctx)),
     });
   },
 });

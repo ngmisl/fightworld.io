@@ -8,7 +8,7 @@ export const Navbar: React.FC = () => {
   const auth = useSnapshot(authStore);
 
   return (
-    <nav className="flex justify-between">
+    <nav className="pb-3 flex justify-between">
       <ul className="inline-flex gap-[2px]">
         <NavbarLink to="/">Home</NavbarLink>
       </ul>

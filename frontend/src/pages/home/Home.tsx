@@ -1,3 +1,3 @@
 export const Home = () => {
-  return <div>You are not logged in yet</div>;
+  return <div>Welcome to the game</div>;
 };

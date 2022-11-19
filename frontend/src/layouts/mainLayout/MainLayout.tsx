@@ -7,7 +7,7 @@ import { User } from "~/pages/User/User";
 
 export const MainLayout = () => {
   return (
-    <div className="max-w-5xl m-auto bg-gray-100 h-screen">
+    <div className="p-3 max-w-5xl m-auto bg-gray-100 h-screen">
       <Navbar />
       <Routes>
         <Route element={<PrivateRoutes />}>
