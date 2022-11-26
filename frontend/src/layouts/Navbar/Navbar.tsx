@@ -1,8 +1,8 @@
 import { useSnapshot } from "valtio";
 import authStore from "~/stores/authStore";
-import { Login } from "./Login";
-import { Logout } from "./Logout";
-import { NavbarLink } from "./NavbarLink";
+import { Login } from "./components/Login";
+import { Logout } from "./components/Logout";
+import { NavbarLink } from "./components/NavbarLink";
 
 export const Navbar: React.FC = () => {
   const auth = useSnapshot(authStore);

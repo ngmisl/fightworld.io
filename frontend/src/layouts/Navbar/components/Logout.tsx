@@ -1,6 +1,6 @@
 import authStore from "~/stores/authStore";
 import { useLogoutMutation } from "~/generated/graphql";
-import { Button } from "../Button";
+import { Button } from "~/ui/Button";
 
 export const Logout = () => {
   const [, query] = useLogoutMutation();

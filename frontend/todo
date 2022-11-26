@@ -1,3 +1,4 @@
-- test lazy loading
+- Structure styling better. (color variables and more variables that can be changed. Reusable styles instead of copy paste)
+- Finish inventory UI
 - need to fix linting, typechecking and formatting properly on commit
 - make pipeline

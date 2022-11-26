@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
-import { Tab, TabsContainer } from "~/ui";
+import { Slot, SlotsContainer, Tab, TabsContainer } from "~/ui";
 
-export const InventoryLayout = () => {
+const Inventory = () => {
   enum TabEnum {
     HEROES = "Heroes",
     WEAPONS = "Weapons",
@@ -58,21 +58,10 @@ export const InventoryLayout = () => {
 
   let slots: ReactNode;
 
-  if (toggleState === TabEnum.HEROES)
-    slots = heroes.map((hero) => (
-      <div className="w-16 h-16 bg-amber-500 p-2 border-amber-800 border-2 rounded-sm" key={hero.id}>
-        {hero.id}
-      </div>
-    ));
+  if (toggleState === TabEnum.HEROES) slots = heroes.map((hero) => <Slot key={hero.id}>{hero.id}</Slot>);
 
-  if (toggleState === TabEnum.WEAPONS)
-    slots = weapons.map((weapon) => (
-      <div className="w-16 h-16 bg-amber-500 p-2 border-amber-800 border-2 rounded-sm" key={weapon.id}>
-        {weapon.id}
-      </div>
-    ));
+  if (toggleState === TabEnum.WEAPONS) slots = weapons.map((weapon) => <Slot key={weapon.id}>{weapon.id}</Slot>);
 
-  console.log(slots);
   return (
     <div className="w-1/2">
       <TabsContainer>
@@ -84,9 +73,9 @@ export const InventoryLayout = () => {
         </Tab>
       </TabsContainer>
 
-      <div className="bg-stone-900 min-h-[30rem] p-2 border-black rounded-sm">
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(4rem,1fr))] gap-1">{slots}</div>
-      </div>
+      <SlotsContainer>{slots}</SlotsContainer>
     </div>
   );
 };
+
+export default Inventory;

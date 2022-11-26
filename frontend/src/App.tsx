@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { MainLayout } from "./layouts/mainLayout/MainLayout";
+import { MainLayout } from "./layouts/MainLayout/MainLayout";
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import { SuspenseCustom } from "~/ui";
-import Inventory from "./Inventory";
+import Inventory from "./components/Inventory";
 
 export const User = () => {
   return (

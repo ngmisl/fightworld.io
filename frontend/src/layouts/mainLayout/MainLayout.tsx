@@ -2,8 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import { PrivateRoutes } from "~/pages/PrivateRoutes";
 import { PublicRoutes } from "~/pages/PublicRoutes";
 import { Home } from "~/pages/Home/Home";
-import { Message, Navbar } from "~/ui";
+
 import { User } from "~/pages/User/User";
+import { Navbar } from "../Navbar";
+import { Message } from "~/layouts/Message";
 
 export const MainLayout = () => {
   return (

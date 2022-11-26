@@ -7,9 +7,9 @@ interface Props {
 export const Tab: React.FC<Props> = (props) => {
   if (props.active)
     return (
-      <li className="mr-2">
+      <li>
         <div
-          className="cursor-default inline-flex p-4 text-gray-300 rounded-t-lg border-b-2 border-slate-300 hover:text-gray-300 hover:border-gray-300"
+          className="cursor-default inline-flex p-4 text-gray-300 border-t-2 border-blue-500 hover:text-gray-300"
           aria-current="page"
         >
           {props.children}
@@ -17,9 +17,9 @@ export const Tab: React.FC<Props> = (props) => {
       </li>
     );
   return (
-    <li className="mr-2">
+    <li>
       <div
-        className="cursor-pointer inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300"
+        className="cursor-pointer bg-stone-700 inline-flex p-4 border-t-2 border-transparent hover:text-gray-300 hover:border-blue-500"
         onClick={props.onClick}
       >
         {props.children}
